@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: .6rem;
+  background-color: #18171F;
+  transform: scale(3);
+}
+
+#slider::-webkit-slider-thumb:hover {
+  transform: scale(3.6);
+}
+ 
+ @layer base {
+  body {
+    @apply bg-zinc-700 flex flex-col w-screen h-screen m-auto items-center justify-center text-white font-manrope overflow-x-hidden overflow-y-hidden;
+  }
+  label {
+    @apply pl-6
+  }
+ }
