@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { saveAs } from "file-saver";
 
 export default function Home() {
   const [input, setInput] = useState(10);
   const [submit, setSubmit] = useState(false);
+  const [saveSubmit, setSaveSubmit] = useState(false);
   const [text, setText] = useState("");
   const [lowercase, setLowercase] = useState("");
   const [uppercase, setUppercase] = useState("");
@@ -23,8 +23,7 @@ export default function Home() {
   const [saveModule, setSaveModule] = useState(false);
   const [saveHover, setSaveHover] = useState(false);
   const [expanded, setExpanded] = useState(false);
- 
-   
+  const [error, setError] = useState(false);
   const tempPassword = [];
 
   let params = lowercase + uppercase + number + special;
@@ -44,6 +43,19 @@ export default function Home() {
       setSubmit(false);
     }
   }, [submit]);
+
+  useEffect(() => {
+    if (saveSubmit) {
+      var saveName = `${fileName}.txt`
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text,' + encodeURI(password);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = saveName;
+      hiddenElement.click();
+    }
+    setSaveSubmit(false);
+  }, [saveSubmit]);
+  
 
   function handleCopy() {
     if (password != "") {
@@ -93,8 +105,10 @@ export default function Home() {
   }
 
   function handleFileNameChange(e) {
-    setFileName(e.target.input);
+    setFileName(e.target.value);
   }
+
+  {/* below validator is pretty simple and not universal though "safe", checks for alphanumerics and hyphen*/}
 
   function fileValidator(e) {
     var validChars = new RegExp("/[a-z0-9]|[-]/gi");
@@ -104,28 +118,10 @@ export default function Home() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!fileValidator(fileName)) {
-      {
-        function download(fileName, text) {
-          console.log(fileName);
-          setFileName(fileName.concat(".txt"));
-          console.log(fileName);
-          var element = document.createElement('a');
-          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-          element.setAttribute('download', fileName);        
-          element.style.display = 'none';
-          document.body.appendChild(element);        
-          element.click();        
-          document.body.removeChild(element);
-        }
-        download(fileName, password);
-      }
+      setSaveSubmit(true);
+    } else {
+      setError(true);
     }
-  }
-
-  {
-    /* try {
-    var isFileSaverSupported = !!new Blob;
-} catch (e) {} */
   }
 
   return (
@@ -166,8 +162,8 @@ export default function Home() {
             onClick={() => setSaveModule(!saveModule)}
             onMouseEnter={() => setSaveHover(true)}
             onMouseLeave={() => setSaveHover(false)}
-            className={`${saveModule ? "italic text-yellow-200" : ""} ${
-              saveHover ? "text-yellow-200" : ""
+            className={`${saveModule ? "text-black bg-yellow-200" : ""} ${
+              saveHover ? "text-black bg-yellow-200" : ""
             } text-lg mt-3 ml-auto mr-0 bg-[#18171F] px-4 py-2 rounded transition-all`}
           >
             Save As...
@@ -284,31 +280,42 @@ export default function Home() {
 
         {/* "saveModule" and "expanded", while representing the same state, need to handle setTimeout differently to make display: hidden or "hidden" work */}
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className={`${
-          !saveModule ? "opacity-0" : "opacity-100"
-        } absolute flex flex-col border-2 w-48 h-32 mt-[-34.5%] ml-[29.5%] p-0.5 rounded bg-yellow-200 border-none text-xl text-zinc-700 transition-all delay-100`}
-      >
-        <p className="text-md mt-0.5 mb-0.5 mx-1 italic">Enter fileName...</p>
-        <div className="flex flex-row">
-          <input
-            id="fileName"
-            type="text"
-            value={fileName}
-            onChange={handleFileNameChange}
-            className="w-full h-4/5 bg-zinc-700 text-yellow-200 mt-0 mb-0.5 mx-1 rounded"
-          />
-
-          {/* elected to go for p tag over label tag as label padding was difficult to work with (wanted the ".txt" extension on screen closer to the input field whereas the "label" element always added extra static padding) */}
-        </div>
-        <button
-          type="submit"
-          className="mt-0 mb-1 mx-1 border rounded h-full hover:text-yellow-200 hover:bg-zinc-700 transition-all"
+      <div>
+        <form
+          onSubmit={handleSubmit}
+          className={`${
+            !saveModule ? "opacity-0" : "opacity-100"
+          } absolute flex flex-col border-2 w-48 h-32 mt-[-34.5%] ml-[29.5%] p-0.5 rounded bg-yellow-200 border-none text-xl text-zinc-700 transition-all delay-100`}
         >
-          Save
-        </button>
-      </form>
+          <p className="text-md mt-0.5 mb-0.5 mx-1 italic">Enter filename...</p>
+          <div className="flex flex-row">
+            <input
+              id="fileName"
+              type="text"
+              value={fileName}
+              onChange={handleFileNameChange}
+              className="w-full h-4/5 bg-zinc-700 text-yellow-200 mt-0 mb-0.5 mx-1 rounded"
+            />
+
+            {/* elected to go for p tag over label tag as label padding was difficult to work with (wanted the ".txt" extension on screen closer to the input field whereas the "label" element always added extra static padding) */}
+          
+          </div>
+          <button
+            type="submit"
+            onClick={() => setSaveModule(false)}
+            className="mt-0 mb-1 mx-1 border rounded h-full hover:text-yellow-200 hover:bg-zinc-700 transition-all"
+          >
+            Save
+          </button>
+        </form>
+        {error ? (
+            <p className="absolute h-8 mt-[-32.7%] ml-[40%] p-0.5 text-xl rounded italic transition-all text-red-500 delay-100">
+              Please enter a valid filename
+            </p>
+          ) : (
+            ""
+          )}
+      </div>
     </>
   );
 }
