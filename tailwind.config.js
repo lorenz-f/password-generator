@@ -6,9 +6,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      manrope: ["Manrope", "sans-serif"],
-      oxygen: ["Oxygen", "sans-serif"],
-      rufina: ["Rufina", "serif"]
+      poiretOne: ["Poiret One", "cursive"],
+      didactGothic: ["Didact Gothic", "sans-serif"]
     },
   },
   plugins: [
