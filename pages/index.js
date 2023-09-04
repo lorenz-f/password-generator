@@ -118,10 +118,10 @@ export default function Home() {
             Password Generator
           </h1>
           <div className="bg-black my-8 rounded-lg flex flex-row items-center p-3">
-            <h2 className="ml-5 text-white text-2xl tracking-wider">
+            <h2 className="pl-5 sm:pl-2 text-white text-2xl sm:text-xl tracking-wider">
               {password}
             </h2>
-            <h3 className={`${!copy ? "opacity-0" : "opacity-100"} ml-auto mr-0 text-lg text-yellow-200 bg-transparent color-[#00FFFF] transition-all`}>
+            <h3 className={`${!copy ? "opacity-0" : "opacity-100"} ml-auto mr-0 text-lg text-yellow-200 bg-transparent color-[#00FFFF] transition-all sm:hidden`}>
               Copied!
             </h3>
             <svg
@@ -130,7 +130,7 @@ export default function Home() {
               onMouseUp={() => setCopyPress(false)} 
               className={`${
                 copyPress ? "scale-90" : ""
-              } ml-auto mr-5 cursor-pointer transition-all`}
+              } ml-auto mr-5 cursor-pointer transition-all sm:hidden`}
               xmlns="http://www.w3.org/2000/svg"
               height="48"
               width="48"
