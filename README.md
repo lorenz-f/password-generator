@@ -14,3 +14,25 @@ The following technologies and topics are covered:
 [Node.js](https://nodejs.org/en/)  
 [Next.js](https://nextjs.org/)  
 [TailwindCSS](https://tailwindcss.com/)  
+
+## Installation and Setup Guide
+
+### 1. **Clone the repository:**
+```bash
+git clone https://github.com/lorenz-f/password-generator.git
+```
+
+### 2. **Navigate to the project directory:**
+```bash
+cd password-generator
+```
+
+### 3. **Install dependencies:**
+```bash
+npm install
+```
+
+### 4. **Start the development server:**
+```bash
+npm run dev
+```
