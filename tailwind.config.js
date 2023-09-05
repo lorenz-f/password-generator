@@ -9,9 +9,13 @@ module.exports = {
       poiretOne: ["Poiret One", "cursive"],
       didactGothic: ["Didact Gothic", "sans-serif"]
     },
+    screens: {
+      'sm': {'max': '700px'} 
+    }
   },
   plugins: [
     require("@tailwindcss/forms"),
     require('flowbite/plugin')
   ], 
+  
 }
