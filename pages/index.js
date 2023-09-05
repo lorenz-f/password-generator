@@ -114,10 +114,10 @@ export default function Home() {
       <GithubCorner href="https://github.com/lorenz-f/password-generator" target="_blank" rel="noreferrer" size="100" octoColor="#ccf" bannerColor="#000000" />
       <div className="bg-[#CCCCFF] flex flex-col h-screen w-full m-auto items-center justify-center text-black font-didactGothic overflow-hidden">
         <div className="w-[600px] sm:w-screen sm:border-none h-[94%] flex flex-col justify-center transition-all border-l border-r border-black px-10 sm:px-5">
-          <h1 className="w-full text-center text-7xl sm:text-5xl sm:mt-24 sm:py-0 font-poiretOne py-8">
+          <h1 className="w-full text-center text-7xl sm:text-5xl sm:pt-24 sm:py-0 font-poiretOne py-8">
             Password Generator
           </h1>
-          <div className="bg-black my-8 rounded-lg flex flex-row items-center p-3">
+          <div className="bg-black my-8 rounded-lg flex flex-row items-center p-3 sm:min-h-[50px]">
             <h2 className="pl-5 sm:pl-2 text-white text-2xl sm:text-xl tracking-wider">
               {password}
             </h2>
